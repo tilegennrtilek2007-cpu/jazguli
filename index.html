@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Jaz Guli Astana — Премиум Петунии</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    :root {
+      --pink-primary: #e03a7a;
+      --pink-hover: #b52a5f;
+      --pink-light: #fff0f5;
+      --pink-gradient: linear-gradient(135deg, #fce4ec 0%, #ffd1dc 100%);
+      --green-primary: #1a7f5c;
+      --bg-primary: #fdfdfd;
+      --bg-secondary: #f6f8f7;
+      --white: #ffffff;
+      --text-main: #212121;
+      --text-muted: #757575;
+      --radius-full: 50px;
+      --radius-card: 24px;
+      --radius-input: 16px;
+      --shadow-premium: 0 8px 30px rgba(0,0,0,0.06);
+    }
+
+    body { background: var(--bg-primary); font-family: 'Inter', sans-serif; color: var(--text-main); line-height: 1.6; }
+
+    /* Hero Section */
+    .hero {
+      background: var(--bg-secondary);
+      padding: 4rem 1.5rem 3rem;
+      text-align: center;
+      border-radius: 0 0 40px 40px;
+    }
+
+    .logo { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 0.3rem; }
+    .logo span { color: var(--pink-primary); font-style: italic; }
+    .tagline { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; }
+
+    .hero-badges { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+    .badge {
+      background: var(--white); padding: 8px 16px; border-radius: var(--radius-full);
+      font-size: 0.75rem; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      border: 1px solid rgba(224, 58, 122, 0.05);
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky; top: 15px; z-index: 100;
+      background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      display: flex; padding: 5px; margin: 15px; border-radius: var(--radius-full);
+      box-shadow: var(--shadow-premium); border: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .nav-btn {
+      flex: 1; padding: 12px; border: none; background: none;
+      font-size: 0.85rem; font-weight: 600; color: var(--text-muted);
+      border-radius: var(--radius-full); transition: 0.3s;
+    }
+
+    .nav-btn.active { background: var(--white); color: var(--pink-primary); box-shadow: 0 4px 12px rgba(224, 58, 122, 0.15); }
+
+    /* Grid & Cards */
+    .container { padding: 1.5rem; max-width: 900px; margin: 0 auto 80px; }
+    .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+
+    .product-card {
+      background: var(--white); border-radius: var(--radius-card);
+      overflow: hidden; box-shadow: var(--shadow-premium);
+      display: flex; flex-direction: column;
+    }
+
+    .product-img { aspect-ratio: 1/1; position: relative; background: #eee; }
+    .product-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .product-info { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+    .product-name { font-weight: 700; font-size: 0.95rem; }
+    .price-tag { font-weight: 800; color: var(--pink-primary); margin-top: 5px; }
+
+    .add-btn {
+      margin-top: 10px; width: 100%; padding: 10px; border: none;
+      border-radius: 12px; background: var(--pink-gradient);
+      color: var(--pink-primary); font-weight: 700; cursor: pointer;
+    }
+    .add-btn.added { background: var(--green-primary); color: white; }
+
+    /* 2GIS Button */
+    .twogis-btn {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #62b53f; color: white; text-decoration: none;
+      padding: 15px; border-radius: 15px; font-weight: 600; margin-top: 15px;
+    }
+
+    /* Floating Cart Bar */
+    .floating-cart {
+      position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+      width: 90%; max-width: 400px; background: #212121; color: white;
+      padding: 16px 20px; border-radius: 20px; display: none;
+      justify-content: space-between; align-items: center; z-index: 1000;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .cart-item {
+      background: var(--white); padding: 15px; border-radius: 18px;
+      margin-bottom: 12px; display: flex; align-items: center; gap: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+    }
+
+    .form-input {
+      width: 100%; padding: 14px; border: 1px solid #eee;
+      border-radius: 12px; margin-bottom: 10px; background: var(--bg-secondary);
+      font-family: inherit;
+    }
+
+    .whatsapp-btn {
+      background: #25D366; color: white; width: 100%; padding: 16px;
+      border: none; border-radius: 15px; font-weight: 700; margin-top: 10px;
+    }
+
+    .section { display: none; animation: fadeIn 0.4s ease; }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  </style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo">Jaz Guli <span>Astana</span></div>
+  <div class="tagline">Оптовая продажа петуний</div>
+  <div class="hero-badges">
+    <div class="badge">🌸 75₸ / шт</div>
+    <div class="badge">📦 Полёт: 50 шт</div>
+    <div class="badge">🚚 Астана: Бесплатно*</div>
+  </div>
+</div>
+
+<nav>
+  <button class="nav-btn active" onclick="showTab('catalog',this)">Каталог</button>
+  <button class="nav-btn" onclick="showTab('cart',this)">Корзина</button>
+  <button class="nav-btn" onclick="showTab('about',this)">Контакты</button>
+</nav>
+
+<div id="catalog" class="section active">
+  <div class="container">
+    <div class="products-grid" id="productsGrid"></div>
+  </div>
+</div>
+
+<div id="cart" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:15px; font-family:'Playfair Display'">Ваша корзина</h2>
+    <div id="cartItems"></div>
+    <div id="cartSummaryEl"></div>
+    <div id="orderForm"></div>
+  </div>
+</div>
+
+<div id="about" class="section">
+  <div class="container">
+    <h2 style="margin-bottom:15px; font-family:'Playfair Display'">Наш адрес и условия</h2>
+    <div style="background: white; padding: 20px; border-radius: 20px; box-shadow: var(--shadow-premium); margin-bottom: 20px;">
+        <p style="font-weight: 700; margin-bottom: 5px;">📍 Местоположение:</p>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">г. Астана, шоссе Алаш 26/4</p>
+        <a href="https://2gis.kz/astana/search/Алаш%2026%2F4" target="_blank" class="twogis-btn">
+          <img src="images/2gis.png" width="22" height="22" style="border-radius: 4px;">
+          Открыть в 2ГИС
+        </a>
+    </div>
+    <div class="badge" style="width: 100%; margin-bottom: 10px; padding: 15px; justify-content: flex-start;">✅ От 1000 шт. — доставка бесплатно</div>
+    <div class="badge" style="width: 100%; margin-bottom: 10px; padding: 15px; justify-content: flex-start;">💳 Предоплата: 25%</div>
+  </div>
+</div>
+
+<div class="floating-cart" id="floatingCart">
+  <div><span id="floatingCount">0</span> шт. • <span id="floatingSum">0</span> ₸</div>
+  <a href="javascript:void(0)" onclick="showTab('cart', document.querySelectorAll('.nav-btn')[1])" style="color:var(--pink-primary); text-decoration:none; font-weight:700;">В корзину →</a>
+</div>
+
+<script>
+const PRICE = 75, FLIGHT = 50, FREE_DELIVERY_QTY = 1000, DELIVERY_FEE = 1500;
+
+// Барлық 11 товарды және сіздің сурет жолдарыңызды қайтардым
+const products = [
+  { id:1,  name:'Белый',           emoji:'🤍', img: 'images/white.jpg' },
+  { id:2,  name:'Шуга',            emoji:'🌼', img: 'images/shuga.png' },
+  { id:3,  name:'Розовый',         emoji:'🌸', img: 'images/rozovy.jpg' },
+  { id:4,  name:'Красный',         emoji:'🌹', img: 'images/red.jpg' },
+  { id:5,  name:'Бургунт',         emoji:'🍇', img: 'images/burgunt.jpg' },
+  { id:6,  name:'Фиолетовый',      emoji:'💜', img: 'images/fiolet.jpg' },
+  { id:7,  name:'Микс',            emoji:'💐', img: 'images/mix.jpg' },
+  { id:8,  name:'Фиолетовая кайма', emoji:'🟣', img: 'images/fiolet_kaima.jpg' },
+  { id:9,  name:'Красная кайма',    emoji:'🔴', img: 'images/red_kaima.jpg' },
+  { id:10, name:'Бордовая кайма',   emoji:'🍷', img: 'images/burgunt_kaima.jpg' },
+  { id:11, name:'Фиолетовая звезда',emoji:'⭐', img: 'images/fiolet_zvezda.jpg' },
+];
+
+let cart = {};
+
+function renderProducts() {
+  document.getElementById('productsGrid').innerHTML = products.map(p => `
+    <div class="product-card">
+      <div class="product-img">
+        <img src="${p.img}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block'">
+        <span style="display:none; font-size:3rem; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%)">${p.emoji}</span>
+      </div>
+      <div class="product-info">
+        <div class="product-name">${p.name}</div>
+        <div class="price-tag">${(PRICE * FLIGHT).toLocaleString()} ₸ </div>
+        <button class="add-btn" id="addBtn${p.id}" onclick="addToCart(${p.id})">Добавить +</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(id) {
+  if (!cart[id]) cart[id] = { ...products.find(x => x.id === id), flights: 1 };
+  else cart[id].flights++;
+  updateFloatingCart();
+  const btn = document.getElementById('addBtn' + id);
+  btn.textContent = 'Добавлено ✓'; btn.classList.add('added');
+  setTimeout(() => { btn.textContent = 'Добавить +'; btn.classList.remove('added'); }, 800);
+}
+
+function updateFloatingCart() {
+  const items = Object.values(cart);
+  const totalQty = items.reduce((s, i) => s + i.flights * FLIGHT, 0);
+  document.getElementById('floatingCart').style.display = totalQty > 0 ? 'flex' : 'none';
+  document.getElementById('floatingCount').textContent = totalQty;
+  document.getElementById('floatingSum').textContent = (totalQty * PRICE).toLocaleString();
+}
+
+function renderCart() {
+  const items = Object.values(cart);
+  const itemsDiv = document.getElementById('cartItems');
+  if (!items.length) {
+    itemsDiv.innerHTML = `<div style="text-align:center; padding:40px; color:#999;">Ваша корзина пока пуста 🌸</div>`;
+    document.getElementById('cartSummaryEl').innerHTML = '';
+    document.getElementById('orderForm').innerHTML = '';
+    return;
+  }
+
+  itemsDiv.innerHTML = items.map(item => `
+    <div class="cart-item">
+      <div style="font-size: 1.5rem;">${item.emoji}</div>
+      <div style="flex:1">
+        <div class="product-name">${item.name}</div>
+        <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+          <button onclick="changeQty(${item.id},-1)" style="width:28px; height:28px; border:none; border-radius:8px; background:#eee;">-</button>
+          <b style="font-size:0.9rem;">${item.flights} полёт(а)</b>
+          <button onclick="changeQty(${item.id},1)" style="width:28px; height:28px; border:none; border-radius:8px; background:#eee;">+</button>
+        </div>
+      </div>
+      <div class="price-tag">${(item.flights * FLIGHT * PRICE).toLocaleString()} ₸</div>
+    </div>
+  `).join('');
+
+  const totalQty = items.reduce((s,i) => s + i.flights * FLIGHT, 0);
+  const totalSum = totalQty * PRICE;
+  const delivery = totalQty >= FREE_DELIVERY_QTY ? 0 : DELIVERY_FEE;
+  const grandTotal = totalSum + delivery;
+  const prepay = Math.round(grandTotal * 0.25);
+
+  document.getElementById('cartSummaryEl').innerHTML = `
+    <div style="background:white; padding:20px; border-radius:20px; box-shadow:var(--shadow-premium); margin-top:15px;">
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Товарів:</span><b>${totalQty} шт</b></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Доставка:</span><b>${delivery === 0 ? 'Бесплатно' : delivery + ' ₸'}</b></div>
+      <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:800; color:var(--pink-primary); border-top:1px solid #eee; padding-top:10px; margin-top:10px;">
+        <span>Итого:</span><span>${grandTotal.toLocaleString()} ₸</span>
+      </div>
+      <div style="text-align:right; font-size:0.85rem; color:var(--green-primary); font-weight:600; margin-top:5px;">Предоплата 25%: ${prepay.toLocaleString()} ₸</div>
+    </div>
+  `;
+
+  document.getElementById('orderForm').innerHTML = `
+    <div style="margin-top:20px;">
+      <input type="text" id="fName" class="form-input" placeholder="Ваше имя">
+      <input type="tel" id="fPhone" class="form-input" placeholder="Ваш номер телефона">
+      <input type="text" id="fAddress" class="form-input" placeholder="Адрес доставки">
+      <textarea id="fComment" class="form-input" placeholder="Комментарий" style="height:60px;"></textarea>
+      <button class="whatsapp-btn" onclick="sendToWa()">Заказать через WhatsApp</button>
+    </div>
+  `;
+}
+
+function changeQty(id, delta) {
+  if (cart[id].flights + delta > 0) cart[id].flights += delta;
+  else delete cart[id];
+  renderCart(); updateFloatingCart();
+}
+
+function showTab(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(name).classList.add('active');
+  btn.classList.add('active');
+  if(name === 'cart') renderCart();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function sendToWa() {
+  const name = document.getElementById('fName').value;
+  const phone = document.getElementById('fPhone').value;
+  const address = document.getElementById('fAddress').value || 'Не указан';
+  const comment = document.getElementById('fComment').value || 'Нет';
+
+  if (!name || !phone) return alert('Введите имя и телефон');
+
+  const items = Object.values(cart);
+  const totalFlights = items.reduce((s, i) => s + i.flights, 0);
+  const totalQty = totalFlights * FLIGHT;
+  const totalSum = totalQty * PRICE;
+  const delivery = totalQty >= FREE_DELIVERY_QTY ? 0 : DELIVERY_FEE;
+  const grandTotal = totalSum + delivery;
+  const prepay = Math.round(grandTotal * 0.25);
+
+  let msg = `🌸 *Новый заказ — Jaz Guli Astana*\n\n`;
+  msg += `📦 *Состав заказа:*\n`;
+  items.forEach(i => {
+    msg += `* ${i.name} — ${i.flights} полёт(ов) (${i.flights * FLIGHT} шт) — ${(i.flights * FLIGHT * PRICE).toLocaleString()}₸\n`;
+  });
+
+  msg += `\n📊 *Итого:* ${totalFlights} полётов / ${totalQty} шт\n`;
+  msg += `🚚 *Доставка:* ${delivery === 0 ? 'Бесплатно' : delivery + '₸'}\n`;
+  msg += `💵 *Итого:* ${grandTotal.toLocaleString()}₸\n`;
+  msg += `💳 *Предоплата 25%:* ${prepay.toLocaleString()}₸\n\n`;
+  msg += `👤 *Клиент:*\nИмя: ${name}\nТел: ${phone}\nАдрес: ${address}\nКомментарий: ${comment}`;
+
+  window.open(`https://wa.me/77078954607?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+renderProducts();
+</script>
+</body>
+</html>
