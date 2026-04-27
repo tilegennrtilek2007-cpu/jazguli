@@ -134,7 +134,7 @@
   <div class="tagline">Оптовая продажа петуний</div>
   <div class="hero-badges">
     <div class="badge">🌸 75₸ / шт</div>
-    <div class="badge">📦 Полёт: 50 шт</div>
+    <div class="badge">📦 Полет: 50 шт</div>
     <div class="badge">🚚 Астана: Бесплатно*</div>
   </div>
 </div>
@@ -171,7 +171,7 @@
           Открыть в 2ГИС
         </a>
     </div>
-    <div class="badge" style="width: 100%; margin-bottom: 10px; padding: 15px; justify-content: flex-start;">✅ От 1000 шт. — доставка бесплатно</div>
+    <div class="badge" style="width: 100%; margin-bottom: 10px; padding: 15px; justify-content: flex-start;">✅ От 500 шт. — доставка бесплатно</div>
     <div class="badge" style="width: 100%; margin-bottom: 10px; padding: 15px; justify-content: flex-start;">💳 Предоплата: 25%</div>
   </div>
 </div>
@@ -182,9 +182,9 @@
 </div>
 
 <script>
-const PRICE = 75, FLIGHT = 50, FREE_DELIVERY_QTY = 1000, DELIVERY_FEE = 1500;
+// FREE_DELIVERY_QTY айнымалысы 500-ге өзгертілді
+const PRICE = 75, FLIGHT = 50, FREE_DELIVERY_QTY = 500, DELIVERY_FEE = 1500;
 
-// Барлық 11 товарды және сіздің сурет жолдарыңызды қайтардым
 const products = [
   { id:1,  name:'Белый',           emoji:'🤍', img: 'white.jpg' },
   { id:2,  name:'Шуга',            emoji:'🌼', img: 'shuga.png' },
@@ -251,7 +251,7 @@ function renderCart() {
         <div class="product-name">${item.name}</div>
         <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
           <button onclick="changeQty(${item.id},-1)" style="width:28px; height:28px; border:none; border-radius:8px; background:#eee;">-</button>
-          <b style="font-size:0.9rem;">${item.flights} полёт(а)</b>
+          <b style="font-size:0.9rem;">${item.flights} полет(а)</b>
           <button onclick="changeQty(${item.id},1)" style="width:28px; height:28px; border:none; border-radius:8px; background:#eee;">+</button>
         </div>
       </div>
@@ -267,7 +267,7 @@ function renderCart() {
 
   document.getElementById('cartSummaryEl').innerHTML = `
     <div style="background:white; padding:20px; border-radius:20px; box-shadow:var(--shadow-premium); margin-top:15px;">
-      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Товарів:</span><b>${totalQty} шт</b></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Товаров:</span><b>${totalQty} шт</b></div>
       <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Доставка:</span><b>${delivery === 0 ? 'Бесплатно' : delivery + ' ₸'}</b></div>
       <div style="display:flex; justify-content:space-between; font-size:1.2rem; font-weight:800; color:var(--pink-primary); border-top:1px solid #eee; padding-top:10px; margin-top:10px;">
         <span>Итого:</span><span>${grandTotal.toLocaleString()} ₸</span>
@@ -321,10 +321,10 @@ function sendToWa() {
   let msg = `🌸 *Новый заказ — Jaz Guli Astana*\n\n`;
   msg += `📦 *Состав заказа:*\n`;
   items.forEach(i => {
-    msg += `* ${i.name} — ${i.flights} полёт(ов) (${i.flights * FLIGHT} шт) — ${(i.flights * FLIGHT * PRICE).toLocaleString()}₸\n`;
+    msg += `* ${i.name} — ${i.flights} полет(ов) (${i.flights * FLIGHT} шт) — ${(i.flights * FLIGHT * PRICE).toLocaleString()}₸\n`;
   });
 
-  msg += `\n📊 *Итого:* ${totalFlights} полётов / ${totalQty} шт\n`;
+  msg += `\n📊 *Итого:* ${totalFlights} полетов / ${totalQty} шт\n`;
   msg += `🚚 *Доставка:* ${delivery === 0 ? 'Бесплатно' : delivery + '₸'}\n`;
   msg += `💵 *Итого:* ${grandTotal.toLocaleString()}₸\n`;
   msg += `💳 *Предоплата 25%:* ${prepay.toLocaleString()}₸\n\n`;
